@@ -1,0 +1,22 @@
+{
+  "name": "express",
+  "version": "0.6.9",
+  "description": "Ovo je moj prvi NPM projekt",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hello",
+    "world"
+  ],
+  "author": "crnjakovic.sasa.kc@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

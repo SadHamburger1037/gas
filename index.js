@@ -10,7 +10,7 @@ app.get("/", (request, response) => {
 })
 
 app.get("/test", (request, response) => {
-    response.send("ggara test")
+    response.send("ggara test gas")
 })
 
 //aktivacija server

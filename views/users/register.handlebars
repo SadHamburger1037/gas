@@ -3,7 +3,7 @@
         <div class="max-w-md">
             {{#if status.display_form}}
             <form method="post" action="/users/signin">
-                <h1 class="text-5xl font-bold">Prijava korisnika</h1>
+                <h1 class="text-5xl font-bold">Registracija korisnika</h1>
 
                 <div class="py-6">
                     <div>
@@ -21,6 +21,11 @@
                                 <span class="label-text">Zaporka</span>
                             </div>
                             <input type="password" name="password" placeholder="Upišite zaporku ovdje..."
+                                class="input input-bordered w-full max-w-xs" required="" maxlength="50" />
+                            <div class="label">
+                                <span class="label-text">Potvrdite zaporku</span>
+                            </div>
+                            <input type="password2" name="password2" placeholder="Upišite zaporku ovdje..."
                                 class="input input-bordered w-full max-w-xs" required="" maxlength="50" />
                         </label>
                     </div>

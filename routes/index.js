@@ -1,14 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const { checkAuthCookie } = require("../services/auth.js")
 
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Moja prva aplikacija' });
+// GET /
+router.get("/", function(req, res, next) {
+  res.render("index");
 });
 
-router.get('/test', function(req, res, next) {
-  res.render('test');
+router.get("/protected", checkAuthCookie,function(req, res, next) {
+  res.send("ok");
 });
 
 

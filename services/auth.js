@@ -22,23 +22,31 @@ function getUserToken(id, email, name, role, expDays = 7) {
     return token
 }
 
-function checkAuthCookie(req, res, next) {
-    const token = req.cookie["auth"]
+function parseAuthCookie(req, res, next) {
+    const token = req.cookies[process.env.AUTH_COOKIE_KEY]
 
     let result
 
     try {
         result = jwt.verify(token, JWT_SECRET_KEY)
     } catch (error) {
-        req.clearCookie("auth")
+        res.clearCookie(process.env.AUTH_COOKIE_KEY)
         next()
+        return
     }
 
     req.user = result
+    res.locals.user = result // dostupno u cijelom kodu
+    next()
+}
+
+function authRequired(req, res, next){
+    if(!req.user) throw new Error("Potrebna je prijava u sustav")
     next()
 }
 
 module.exports = {
     getUserToken,
-    checkAuthCookie
+    parseAuthCookie,
+    authRequired
 }

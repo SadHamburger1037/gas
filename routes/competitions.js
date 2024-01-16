@@ -4,7 +4,7 @@ const {authRequired} = require("../services/auth.js")
 
 // GET /
 router.get("/", function(req, res, next) {
-  res.render("index");
+  res.render("competitions/index");
 });
 
-module.exports = router;
+module.exports = router

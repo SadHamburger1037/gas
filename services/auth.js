@@ -1,4 +1,4 @@
-const JWT_SECRET_KEY = "GASKBo124HY53RdC5ErDSQXpeIFFXmOkOLt4H4klZoh01qzFhHb72oCfR6SdvC47i4gZk5iODSSCCBaxpwGpXIbrFlPoxmfy0Jksvhl2kh7WobeAW7RjYmU9fVu6cut2"
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
 const { resolveMx } = require("dns")
 const jwt = require("jsonwebtoken")
@@ -25,9 +25,17 @@ function getUserToken(id, email, name, role, expDays = 7) {
 function checkAuthCookie(req, res, next) {
     const token = req.cookie["auth"]
 
-    const result = jwt.verify(token, JWT_SECRET_KEY)
+    let result
 
-    console.log("TOKEN CHECK", result)
+    try {
+        result = jwt.verify(token, JWT_SECRET_KEY)
+    } catch (error) {
+        req.clearCookie("auth")
+        next()
+    }
+
+    req.user = result
+    next()
 }
 
 module.exports = {

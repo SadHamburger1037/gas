@@ -1,11 +1,35 @@
-<div class="p-4 text-2xl flex flex-col gap-4 ">
-    <div>
-        Ime i prezime: {{user.name}}
+<div class="p-2">
+    {{#if result.display_form}}
+    <form method="post" action="/users/data" class="flex flex-col gap-2">
+        <div class="pb-2 flex flex-col">
+            <label>Ime i Prezime</label>
+            <input type="text" name="name" value="{{user.name}}">
+        </div>
+        <div class="pb-2 flex flex-col">
+            <label>Email adresa</label>
+            <input type="email" name="email" value="{{user.email}}">
+        </div>
+        <div class="pb-2 flex flex-col">
+            <label>Zaporka</label>
+            <input type="password" name="password">
+        </div>
+        <div class="pb-2 flex gap-2">
+            <input type="submit" value="Potvrdi" class="flex-1 btn btn-primary">
+            <input type="reset" value="Poništi" class="flex-1 btn btn-warning">
+        </div>
+    </form>
+    {{/if}}
+    {{#if result.validation_error}}
+    <div class="mt-4">
+        <div class="card w-96 bg-error text-black">
+            <div class="card-body">
+                <h2 class="card-title">Greška!</h2>
+                <p>
+                    Dogodila se greška prilikom provjere podataka, provjerite svoj unos
+                    i pokušajte ponovno!
+                </p>
+            </div>
+        </div>
     </div>
-    <div>
-        Email adresa: {{user.email}}
-    </div>
-    <div>
-        Zaproka: 8=======D((*))
-    </div>
+    {{/if}}
 </div>

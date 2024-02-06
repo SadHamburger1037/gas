@@ -38,7 +38,7 @@
                             <div class="label">
                                 <span class="label-text">Potvrda zaporke</span>
                             </div>
-                            <input type="password" name="password_check" placeholder="Ponovo upišite svoju zaporku"
+                            <input type="password" name="password_check" placeholder="Ponovite svoju zaporku"
                                 class="input input-bordered w-full max-w-xs" />
                         </label>
                     </div>
@@ -49,30 +49,15 @@
             {{/if}}
 
             {{#if result.validation_error}}
-            <div class="mt-4">
-                <div class="card w-96 bg-error text-black">
-                    <div class="card-body">
-                        <h2 class="card-title">Greška!</h2>
-                        <p>
-                            Dogodila se greška prilikom provjere podataka, provjerite svoj unos
-                            i pokušajte ponovno!
-                        </p>
-                    </div>
-                </div>
-            </div>
+            {{> validation_error}}
+            {{/if}}
+
+            {{#if result.email_not_unique}}
+            {{> email_not_unique}}
             {{/if}}
 
             {{#if result.database_error}}
-            <div class="mt-4">
-                <div class="card w-96 bg-error text-black">
-                    <div class="card-body">
-                        <h2 class="card-title">Greška!</h2>
-                        <p>
-                            Dogodila se greška prilikom spremanja podataka, kontaktirajte administratora!
-                        </p>
-                    </div>
-                </div>
-            </div>
+            {{> database_error}}
             {{/if}}
 
             {{#if result.success}}
@@ -90,20 +75,6 @@
                 </div>
             </div>
             {{/if}}
-
-            {{#if result.email_not_unique}}
-            <div class="mt-4">
-                <div class="card w-96 bg-error text-black">
-                    <div class="card-body">
-                        <h2 class="card-title">Greška!</h2>
-                        <p>
-                            Korisnik već postoji, koristite drugu email adresu!
-                        </p>
-                    </div>
-                </div>
-            </div>
-            {{/if}}
-
         </div>
     </div>
 </div>

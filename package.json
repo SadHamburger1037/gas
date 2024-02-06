@@ -5,8 +5,7 @@
   "scripts": {
     "start": "node -r dotenv/config ./bin/www",
     "dev": "npx nodemon -r dotenv/config ./bin/www",
-    "tw": "npx tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/style.css --watch",
-    "resi": "start npx nodemon -r dotenv/config ./bin/www && start npx tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/style.css --watch"
+    "tw": "npx tailwindcss -i ./public/stylesheets/input.css -o ./public/stylesheets/style.css --watch"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

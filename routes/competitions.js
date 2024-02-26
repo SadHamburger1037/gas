@@ -125,13 +125,21 @@ router.get("/singup/:id", function (req, res, next) {
         throw new Error("Neispravan poziv");
     }
 
-    const stmt = db.prepare("INSERT INTO signed_up (user_id, competition_id) VALUES (?,?);");
-    const singUpResult = stmt.run(req.user.sub, req.params.id)
+    const stmt2 = db.prepare("SELECT * FROM signed_up WHERE user_id = ? AND competition_id = ?");
+    const dbResult = stmt2.get(req.user.sub, req.params.id);
 
-    if (singUpResult.changes && singUpResult.changes === 1) {
-        res.render("competitions/form", { result: { signedUp: true } });
-    } else {
-        res.render("competitions/form", { result: { database_error: true } });
+    if(dbResult){
+        res.render("competitions/form", { result: { alreadySignedUp: true } });
+    }
+    else{
+        const stmt = db.prepare("INSERT INTO signed_up (user_id, competition_id) VALUES (?,?);");
+        const singUpResult = stmt.run(req.user.sub, req.params.id)
+
+        if (singUpResult.changes && singUpResult.changes === 1) {
+            res.render("competitions/form", { result: { signedUp: true } });
+        } else {
+            res.render("competitions/form", { result: { database_error: true } });
+        }
     }
 });
 

@@ -3,15 +3,15 @@
     <form method="post" action="/users/data" class="flex flex-col gap-2">
         <div class="pb-2 flex flex-col">
             <label>Ime i prezime</label>
-            <input type="text" name="name" value="{{user.name}}" class="bg-neutral" />
+            <input type="text" name="name" value="{{user.name}}"  />
         </div>
         <div class="pb-2 flex flex-col">
             <label>E-mail adresa</label>
-            <input type="email" name="email" value="{{user.email}}" class="bg-neutral" />
+            <input type="email" name="email" value="{{user.email}}"  />
         </div>
         <div class="pb-2 flex flex-col">
             <label>Zaporka</label>
-            <input type="password" name="password" class="bg-neutral" />
+            <input type="password" name="password"  />
         </div>
         {{> form_buttons }}
     </form>

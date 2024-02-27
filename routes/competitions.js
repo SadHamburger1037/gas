@@ -128,12 +128,12 @@ router.get("/singup/:id", function (req, res, next) {
     const stmt2 = db.prepare("SELECT * FROM signed_up WHERE user_id = ? AND competition_id = ?");
     const dbResult = stmt2.get(req.user.sub, req.params.id);
 
-    if(dbResult){
+    if (dbResult) {
         res.render("competitions/form", { result: { alreadySignedUp: true } });
     }
-    else{
-        const stmt = db.prepare("INSERT INTO signed_up (user_id, competition_id) VALUES (?,?);");
-        const singUpResult = stmt.run(req.user.sub, req.params.id)
+    else {
+        const stmt = db.prepare("INSERT INTO signed_up (user_id, competition_id, applied_at) VALUES (?,?,?);");
+        const singUpResult = stmt.run(req.user.sub, req.params.id, new Date().toISOString())
 
         if (singUpResult.changes && singUpResult.changes === 1) {
             res.render("competitions/form", { result: { signedUp: true } });
@@ -141,6 +141,43 @@ router.get("/singup/:id", function (req, res, next) {
             res.render("competitions/form", { result: { database_error: true } });
         }
     }
+});
+
+// GET /competitions/singedup/:id
+router.get("/signups/:id", function (req, res, next) {
+    // do validation
+    const result = schema_id.validate(req.params);
+    if (result.error) {
+        throw new Error("Neispravan poziv");
+    }
+
+    const stmt = db.prepare("SELECT * FROM signed_up WHERE id = ? ORDER BY applied_at");
+    const podatci = stmt.all(req.params.id);
+
+    if (podatci) {
+        res.render("competitions/signups", { result: { items: podatci } });
+    } else {
+        res.render("competitions/signups", { result: { database_error: true } });
+    }
+
+});
+
+// POST /competitions/editpoints/:id
+router.post("/editpoints/:id", adminRequired, function (req, res, next) {
+    // do validation
+    const result = schema_id.validate(req.params);
+    if (result.error) {
+        throw new Error("Neispravan poziv");
+    }
+
+    const stmt = db.prepare("UPDATE signed_up SET bodovi = ? WHERE id = ?;");
+    const selectResult = stmt.run(req.body.bodovi, req.params.id);
+
+    if (!selectResult) {
+        throw new Error("Neispravan poziv");
+    }
+
+    res.redirect("/competitions/signups/"+req.params.id);
 });
 
 

@@ -4,18 +4,18 @@
         class="flex flex-col gap-2">
         <div class="pb-2 flex flex-col">
             <label>Naziv</label>
-            <input type="text" name="name" class="bg-neutral" required="" minlength="3" maxlength="50" {{#if
+            <input type="text" name="name"  required="" minlength="3" maxlength="50" {{#if
                 result.edit}}value="{{result.edit.name}}" {{/if}} />
         </div>
         <div class="pb-2 flex flex-col" x-data="{}">
             <label>Opis</label>
-            <textarea name="description" class="bg-neutral" rows="10" required="" minlength="3" {{#if
+            <textarea name="description"  rows="10" required="" minlength="3" {{#if
                 result.edit}}x-text="'{{result.edit.description}}'" {{/if}}>
             </textarea>
         </div>
         <div class="pb-2 flex flex-col">
             <label>Rok prijave</label>
-            <input type="datetime-local" name="apply_till" class="bg-neutral" required="" {{#if
+            <input type="datetime-local" name="apply_till"  required="" {{#if
                 result.edit}}value="{{result.edit.apply_till}}" {{/if}} />
         </div>
         {{#if result.edit}}

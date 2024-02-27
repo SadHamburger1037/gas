@@ -5,11 +5,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const { engine } = require("express-handlebars");
 const { parseAuthCookie } = require("./services/auth");
+const fileUpload = require('express-fileupload')
 
 // ROUTERS IMPORT
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const competitonsRouter = require('./routes/competitions');
+const filesRouter = require('./routes/files');
 
 // APP INIT
 const app = express();
@@ -28,11 +30,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(parseAuthCookie);
+app.use(fileUpload());
 
 // ROUTERS SETUP
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/competitions', competitonsRouter);
+app.use('/files', filesRouter);
 
 // 404 > ERROR HANDLER
 app.use(function (req, res, next) {

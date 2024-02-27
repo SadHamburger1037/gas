@@ -151,7 +151,7 @@ router.get("/signups/:id", function (req, res, next) {
         throw new Error("Neispravan poziv");
     }
 
-    const stmt = db.prepare("SELECT * FROM signed_up WHERE id = ? ORDER BY applied_at");
+    const stmt = db.prepare("SELECT * FROM signed_up WHERE competition_id = ? ORDER BY applied_at");
     const podatci = stmt.all(req.params.id);
 
     if (podatci) {
@@ -177,7 +177,7 @@ router.post("/editpoints/:id", adminRequired, function (req, res, next) {
         throw new Error("Neispravan poziv");
     }
 
-    res.redirect("/competitions/signups/"+req.params.id);
+    res.redirect("/competitions/signups/"+req.body.competition_id);
 });
 
 

@@ -1,3 +1,4 @@
 node_modules
 .env
-datoteke
+datoteke/*
+!datoteke/.gitkeep 

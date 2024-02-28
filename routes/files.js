@@ -1,20 +1,28 @@
 const express = require("express");
 const { adminRequired, authRequired } = require("../services/auth");
 const router = express.Router();
+const fs = require('fs');
+const { error } = require("console");
 
 // GET /files
 router.get("/", adminRequired, authRequired, function (req, res, next) {
-  res.render("files/index");
+  var dokumenti = fs.readdirSync('datoteke');
+  dokumenti.shift()
+
+  res.render("files/index", { result: { items: dokumenti } });
 });
 
 // POST /files
 router.post("/", function (req, res, next) {
-
-    console.log(req.files.file)
-
+  if(req.files){
     req.files.file.mv("datoteke/"+ req.files.file.name)
-    
-    res.render("files/index");
+  }
+  res.redirect("/files");
+});
+
+// POST /files/download
+router.post("/download", function (req, res, next) {
+  res.download("datoteke/"+req.body.datoteka);
 });
 
 module.exports = router;

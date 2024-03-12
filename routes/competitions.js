@@ -30,6 +30,9 @@ router.get("/delete/:id", adminRequired, function (req, res, next) {
         throw new Error("Neispravan poziv");
     }
 
+    const stmt2 = db.prepare("DELETE FROM signed_in WHERE competition_id = ?;")
+    const deleteResult2 = stmt.run(req.params.id)
+
     const stmt = db.prepare("DELETE FROM competitions WHERE id = ?;");
     const deleteResult = stmt.run(req.params.id);
 

@@ -36,7 +36,7 @@ router.get("/delete/:id", adminRequired, function (req, res, next) {
     const stmt = db.prepare("DELETE FROM competitions WHERE id = ?;");
     const deleteResult = stmt.run(req.params.id);
 
-    if (!deleteResult.changes || deleteResult.changes !== 1) {
+    if (!deleteResult.changes || deleteResult.changes !== 1 || !deleteResult2.changes || deleteResult2.changes !== 1) {
         throw new Error("Operacija nije uspjela");
     }
 

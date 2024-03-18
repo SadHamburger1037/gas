@@ -1,0 +1,26 @@
+<div class="flex justify-center text-6xl">{{result.items.[0].natjecanje}}</div>
+<div class="overflow-x-auto flex">
+    <table class="table table-zebra">
+        <!-- head -->
+        <thead>
+            <tr>
+                <th>Pozicija</th>
+                <th>Ime Natjecatelja</th>
+                <th>Broj bodova</th>
+                <th>Rok</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each result.items}}
+            <tr>
+                <td x-data="{}">
+                        <span x-text="{{@index}}+1"></span>
+                    </td>
+                <th>{{this.name}}</th>
+                <td>{{this.bodovi}}</td>
+                <td>{{this.apply_till}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

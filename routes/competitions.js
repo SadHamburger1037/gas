@@ -177,8 +177,32 @@ router.post("/editpoints/:id", adminRequired, function (req, res, next) {
         throw new Error("Neispravan poziv");
     }
 
-    res.redirect("/competitions/signups/"+req.body.competition_id);
+    res.redirect("/competitions/signups/" + req.body.competition_id);
 });
+
+//GET /competitions/results
+
+router.get("/results/:id", function (req, res, next) {
+    // do validation
+    const result = schema_id.validate(req.params);
+    if (result.error) {
+        throw new Error("Neispravan poziv");
+    }
+
+    const stmt = db.prepare(`
+        SELECT c.apply_till, c.name AS natjecanje, su.bodovi, u.name
+        FROM signed_up su
+        JOIN competitions c ON su.competition_id = c.id
+        JOIN users u ON su.user_id = u.id
+        WHERE su.competition_id = ?
+        ORDER BY su.bodovi DESC
+    `);
+    const resultDB = stmt.all(req.params.id);
+
+    console.log(resultDB)
+
+    res.render("competitions/results", { result: { items: resultDB , noMenu: true} });
+})
 
 
 module.exports = router;

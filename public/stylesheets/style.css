@@ -2077,6 +2077,7 @@ html {
   display: none;
 }
 
+<<<<<<< HEAD
 .h-5 {
   height: 1.25rem;
 }
@@ -2089,6 +2090,8 @@ html {
   height: 2rem;
 }
 
+=======
+>>>>>>> 0ca356ac51d5e6056379f07669ffc4a66418ce77
 .min-h-screen {
   min-height: 100vh;
 }

@@ -202,8 +202,6 @@ router.get("/results/:id", function (req, res, next) {
     `);
     const resultDB = stmt.all(req.params.id);
 
-    console.log(resultDB)
-
     res.render("competitions/results", { result: { items: resultDB , noMenu: true} });
 })
 

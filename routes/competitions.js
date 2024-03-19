@@ -14,6 +14,17 @@ router.get("/", authRequired, function (req, res, next) {
     `);
     const result = stmt.all();
 
+    const stmt2 = db.prepare(`
+    SELECT *
+    FROM signed_up su
+    JOIN competitions c ON su.competition_id = c.id
+    JOIN users u ON su.user_id = u.id
+    WHERE su.competition_id = ?
+    ORDER BY su.bodovi DESC
+`);
+
+    // VAZNO provjera jel korisnik prijavljen neda mi se sad
+
     res.render("competitions/index", { result: { items: result } });
 });
 
@@ -202,7 +213,7 @@ router.get("/results/:id", function (req, res, next) {
     `);
     const resultDB = stmt.all(req.params.id);
 
-    res.render("competitions/results", { result: { items: resultDB , noMenu: true} });
+    res.render("competitions/results", { result: { items: resultDB, noMenu: true } });
 })
 
 

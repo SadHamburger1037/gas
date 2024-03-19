@@ -1,16 +1,17 @@
-<div class="flex justify-center text-6xl">{{result.items.[0].natjecanje}}</div>
-<div class="overflow-x-auto flex">
-    <table class="table table-zebra">
+<div class="flex justify-center text-6xl">Rezultati iz natjecanja</div><br>
+<div class="flex justify-center text-6xl">{{result.items.[0].natjecanje}}</div><br>
+<div class="flex justify-center text-2xl">{{result.items.[0].apply_till}}</div><br>
+<div class="overflow-x-auto flex justify-center">
+    <table class="w-1/2">
         <!-- head -->
-        <thead>
+        <thead class="h-10">
             <tr>
                 <th>Pozicija</th>
                 <th>Ime Natjecatelja</th>
                 <th>Broj bodova</th>
-                <th>Rok</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="[&>*:nth-child(3)]:border-black [&>*:nth-child(3)]:border-b-2 text-center">
             {{#each result.items}}
             <tr>
                 <td x-data="{}">
@@ -18,7 +19,6 @@
                     </td>
                 <th>{{this.name}}</th>
                 <td>{{this.bodovi}}</td>
-                <td>{{this.apply_till}}</td>
             </tr>
             {{/each}}
         </tbody>

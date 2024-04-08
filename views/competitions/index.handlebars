@@ -39,6 +39,10 @@
                         <a href="/competitions/delete/{{this.id}}" class="btn btn-error btn-xs">Briši</a>
                         <a href="/competitions/signups/{{this.id}}" class="btn btn-secondary btn-xs">Prijave</a>
                         {{/if}}
+                        <!-- tu sam se ubil od posla :,) -->
+                        {{#if (compare this.id 'in' ../result.prijave)}}
+                        <a href="/competitions/sendresults/{{this.id}}" class="btn btn-success btn-xs">Slanje rezultata</a>
+                        {{/if}}
                     </td>
                 </tr>
                 {{/each}}

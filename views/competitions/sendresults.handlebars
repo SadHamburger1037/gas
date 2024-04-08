@@ -1,0 +1,25 @@
+
+<form method="post" action="/competitions/sendresults/{{result.id}}" class="flex flex-col gap-2" enctype="multipart/form-data">
+    <div class="pb-2 flex flex-col">
+        <input type="file" name="file" class="file-input file-input-bordered w-full max-w-xs" />
+    </div>
+    <div class="pb-2 flex flex-row">
+        <button name="file" class="btn btn-outline btn-success">Upload</button>
+    </div>
+</form>
+
+{{#if result.alreadySignedUp}}
+    <div class="mt-4">
+        <div class="card w-96 bg-error text-primary-content">
+            <div class="card-body">
+                <h2 class="card-title">Greška!</h2>
+                <p>
+                    Niste prijavljeni na ovo natjecanje!
+                </p>
+                <div class="card-actions justify-end">
+                    <a class="btn" href="/competitions">Nastavi na prikaz natjecanja</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}

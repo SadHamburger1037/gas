@@ -10,32 +10,42 @@
                 <th>ID korisnika</th>
                 <th>ID natjecanja</th>
                 <th>Datum prijavljivanja</th>
+                <th>Datoteke korisnika</th>
                 <th>Bodovi</th>
             </tr>
         </thead>
         <!-- body -->
         <tbody>
             {{#each result.items}}
-                <tr>
-                    <th>{{this.id}}</th>
-                    <th>{{this.user_id}}</th>
-                    <td>{{this.competition_id}}</td>
-                    <td x-data="{}">
-                        <span x-text="new Date('{{this.applied_at}}').toLocaleString()"></span>
-                    </td>
-                    <td>
-                        <form method="post" action="/competitions/editpoints/{{this.id}}" class="flex flex-col gap-2">
-                            <div class="pb-2 flex flex-col">
-                                <label>Bodovi</label>
-                                <input type="text" name="bodovi" required="" minlength="3" maxlength="50"
-                                    value="{{this.bodovi}}" />
-                                <input type="text" name="competition_id" required="" hidden="" minlength="3" maxlength="50"
-                                    value="{{this.competition_id}}" />
-                            </div>
-                            <input type="submit" value="Potvrdi" class="flex-1 btn btn-primary" />
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+                <th>{{this.id}}</th>
+                <th>{{this.user_id}}</th>
+                <td>{{this.competition_id}}</td>
+                <td x-data="{}">
+                    <span x-text="new Date('{{this.applied_at}}').toLocaleString()"></span>
+                </td>
+                <td>
+                    <form method="post" action="/files/download" class="flex flex-col gap-2">
+                        <div class="p-2 w-auto">
+                            <input type="text" name="datoteka" value="/datoteke/{{../dokumenti}}" readonly=""
+                                class="input input-bordered w-[500px]" />
+                            <input type="submit" class="btn btn-m btn-outline btn-error" value="Download">
+                        </div>
+                    </form>
+                </td>
+                <td>
+                    <form method="post" action="/competitions/editpoints/{{this.id}}" class="flex flex-col gap-2">
+                        <div class="pb-2 flex flex-col">
+                            <label>Bodovi</label>
+                            <input type="text" name="bodovi" required="" minlength="3" maxlength="50"
+                                value="{{this.bodovi}}" />
+                            <input type="text" name="competition_id" required="" hidden="" minlength="3" maxlength="50"
+                                value="{{this.competition_id}}" />
+                        </div>
+                        <input type="submit" value="Potvrdi" class="flex-1 btn btn-primary" />
+                    </form>
+                </td>
+            </tr>
             {{/each}}
         </tbody>
     </table>

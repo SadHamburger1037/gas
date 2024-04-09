@@ -157,7 +157,7 @@ router.get("/singup/:id", function (req, res, next) {
     }
 });
 
-// GET /competitions/singedup/:id
+// GET /competitions/singups/:id
 router.get("/signups/:id", function (req, res, next) {
     // do validation
     const result = schema_id.validate(req.params);
@@ -168,8 +168,24 @@ router.get("/signups/:id", function (req, res, next) {
     const stmt = db.prepare("SELECT * FROM signed_up WHERE competition_id = ? ORDER BY applied_at");
     const podatci = stmt.all(req.params.id);
 
+    const stmt2 = db.prepare("SELECT id FROM users");
+    const podatci2 = stmt2.all();
+
+    podatci22 = podatci2.map(map => map.id)
+
+    var datoteke = [];
+
+    for(let i = 1; i <= podatci22.length ; i++){
+        if(fs.existsSync('datoteke/' + i)){
+            var dokumenti = fs.readdirSync('datoteke/' + i);
+            datoteke.push(dokumenti)
+        }
+    }
+    console.log(datoteke)
+
+
     if (podatci) {
-        res.render("competitions/signups", { result: { items: podatci } });
+        res.render("competitions/signups", { result: { items: podatci, dokumenti: dokumenti } });
     } else {
         res.render("competitions/signups", { result: { database_error: true } });
     }

@@ -25,6 +25,6 @@ router.post("/download", function (req, res, next) {
   res.download("datoteke/"+req.body.datoteka);
 });
 
-//link na datoteku radi isto skida, napisati ime datoteke lijevo i staviti link na datoteku koji je gumb i zove se download
+//VAZNO link na datoteku radi isto skida, napisati ime datoteke lijevo i staviti link na datoteku koji je gumb i zove se download
 
 module.exports = router;

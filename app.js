@@ -9,6 +9,10 @@ const fileUpload = require('express-fileupload')
 
 // HELPERI BATOO
 
+const get = function(array, i){
+  return(array[i])
+}
+
 const compare = function (value1, operator, value2) {
   let result;
 
@@ -39,7 +43,6 @@ const compare = function (value1, operator, value2) {
           break;
       case 'in':
           result = Array.isArray(value2) && value2.includes(value1);
-          console.log(value1, value2, result)
           break;
       default:
           throw new Error(`Unsupported operator: ${operator}`);
@@ -63,7 +66,8 @@ const app = express();
 app.engine('handlebars', engine({
   partialsDir: path.join(__dirname, '/views/partials'),
   helpers: {
-    compare: compare
+    compare: compare,
+    get: get
   }
 }));
 app.set('views', path.join(__dirname, 'views'));

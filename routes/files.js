@@ -14,15 +14,22 @@ router.get("/", adminRequired, authRequired, function (req, res, next) {
 
 // POST /files
 router.post("/", function (req, res, next) {
-  if(req.files){
-    req.files.file.mv("datoteke/"+ req.files.file.name)
+  if (req.files) {
+    req.files.file.mv("datoteke/" + req.files.file.name)
   }
   res.redirect("/files");
 });
 
 // POST /files/download
 router.post("/download", function (req, res, next) {
-  res.download("datoteke/"+req.body.datoteka);
+
+  console.log(req.body.datoteka)
+
+  if (fs.existsSync(req.body.datoteka)){
+    res.download(req.body.datoteka)
+  }else{
+    res.redirect("/competitions/signups/" + req.body.comp_id)
+  }
 });
 
 //VAZNO link na datoteku radi isto skida, napisati ime datoteke lijevo i staviti link na datoteku koji je gumb i zove se download

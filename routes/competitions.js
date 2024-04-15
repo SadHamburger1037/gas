@@ -4,6 +4,8 @@ const { authRequired, adminRequired } = require("../services/auth.js");
 const Joi = require("joi");
 const { db } = require("../services/db.js");
 var fs = require('fs');
+const { log } = require("console");
+const fsExtra = require("fs-extra")
 
 // GET /competitions
 router.get("/", authRequired, function (req, res, next) {
@@ -22,8 +24,7 @@ router.get("/", authRequired, function (req, res, next) {
     // VAZNO provjera jel korisnik prijavljen neda mi se sad
 
     var natjecanja = result2.map(map => map.competition_id)
-    
-    console.log(natjecanja)
+
 
     res.render("competitions/index", { result: { items: result, prijave: natjecanja } });
 });
@@ -173,16 +174,22 @@ router.get("/signups/:id", function (req, res, next) {
 
     podatci22 = podatci2.map(map => map.id)
 
-    var datoteke = [];
+    var dokumenti = [];
 
-    for(let i = 1; i <= podatci22.length ; i++){
-        if(fs.existsSync('datoteke/' + i)){
-            var dokumenti = fs.readdirSync('datoteke/' + i);
-            datoteke.push(dokumenti)
+    for (let i = 1; i <= podatci22.length; i++) {
+        if (dokumenti.length == 0) {
+            dokumenti.push("")
+        }
+
+        if (fs.existsSync(`datoteke/${i}/${req.params.id}`)) {
+            dokumenti.push(fs.readdirSync(`datoteke/${i}/${req.params.id}`).toString());
+        }
+        else {
+            dokumenti.push("")
         }
     }
-    console.log(datoteke)
 
+    console.log(dokumenti)
 
     if (podatci) {
         res.render("competitions/signups", { result: { items: podatci, dokumenti: dokumenti } });
@@ -246,27 +253,28 @@ router.get("/sendresults/:id", function (req, res, next) {
 
     if (!dbResult) {
         res.render("competitions/sendresults", { result: { alreadySignedUp: true } });
-    }else{
-        res.render("competitions/sendresults", {result: { id: req.params.id }});
+    } else {
+        res.render("competitions/sendresults", { result: { id: req.params.id } });
     }
-    
 
-    
+
+
 })
 
 //POST /competitions/sendresults
 
 router.post("/sendresults/:id", function (req, res, next) {
-    
-    if (!fs.existsSync("datoteke/" + req.user.sub)){
-        fs.mkdirSync("datoteke/" + req.user.sub);
+
+    if (!fs.existsSync("datoteke/" + req.user.sub + "/" + req.params.id)) {
+        fs.mkdirSync("datoteke/" + req.user.sub + "/" + req.params.id);
     }
-    
-    if(req.files){
-      req.files.file.mv("datoteke/" + req.user.sub + "/" + req.files.file.name)
+
+
+    if (req.files) {
+        fsExtra.emptyDirSync("datoteke/" + req.user.sub + "/" + req.params.id)
+        req.files.file.mv("datoteke/" + req.user.sub + "/" + req.params.id + "/" + req.files.file.name)
     }
     res.redirect("/competitions/sendresults/" + req.params.id);
-  });
-
+});
 
 module.exports = router;

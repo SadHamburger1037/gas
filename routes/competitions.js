@@ -19,10 +19,6 @@ router.get("/", authRequired, function (req, res, next) {
 
     const stmt2 = db.prepare("SELECT * FROM signed_up WHERE user_id = ?");
     const result2 = stmt2.all(req.user.sub);
-
-
-    // VAZNO provjera jel korisnik prijavljen neda mi se sad
-
     var natjecanja = result2.map(map => map.competition_id)
 
 
@@ -189,7 +185,6 @@ router.get("/signups/:id", function (req, res, next) {
         }
     }
 
-    console.log(dokumenti)
 
     if (podatci) {
         res.render("competitions/signups", { result: { items: podatci, dokumenti: dokumenti } });
@@ -265,14 +260,14 @@ router.get("/sendresults/:id", function (req, res, next) {
 
 router.post("/sendresults/:id", function (req, res, next) {
 
-    if (!fs.existsSync("datoteke/" + req.user.sub + "/" + req.params.id)) {
-        fs.mkdirSync("datoteke/" + req.user.sub + "/" + req.params.id);
+    if (!fs.existsSync("./datoteke/" + req.user.sub + "/" + req.params.id)) {
+        fs.mkdirSync("./datoteke/" + req.user.sub + "/" + req.params.id, {recursive: true});
     }
 
 
     if (req.files) {
-        fsExtra.emptyDirSync("datoteke/" + req.user.sub + "/" + req.params.id)
-        req.files.file.mv("datoteke/" + req.user.sub + "/" + req.params.id + "/" + req.files.file.name)
+        fsExtra.emptyDirSync("./datoteke/" + req.user.sub + "/" + req.params.id)
+        req.files.file.mv("./datoteke/" + req.user.sub + "/" + req.params.id + "/" + req.files.file.name)
     }
     res.redirect("/competitions/sendresults/" + req.params.id);
 });

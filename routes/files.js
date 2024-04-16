@@ -22,9 +22,6 @@ router.post("/", function (req, res, next) {
 
 // POST /files/download
 router.post("/download", function (req, res, next) {
-
-  console.log(req.body.datoteka)
-
   if (fs.existsSync(req.body.datoteka)){
     res.download(req.body.datoteka)
   }else{
@@ -32,6 +29,7 @@ router.post("/download", function (req, res, next) {
   }
 });
 
-//VAZNO link na datoteku radi isto skida, napisati ime datoteke lijevo i staviti link na datoteku koji je gumb i zove se download
+// link na datoteku radi isto skida, napisati ime datoteke lijevo i staviti link na datoteku koji je gumb i zove se download
+// ne dela :(
 
 module.exports = router;

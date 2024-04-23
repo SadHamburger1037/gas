@@ -11,7 +11,7 @@
 {{#each result.items}}
     <form method="post" action="/files/download" class="flex flex-col gap-2">
         <div class="p-2 w-auto">
-                <input type="text" name="datoteka" value="{{this}}" readonly="" class="input input-bordered w-[500px]" />
+                <input type="text" name="datoteka" value="datoteke/{{this}}" readonly="" class="input input-bordered w-[500px]" />
                 <input type="submit" class="btn btn-m btn-outline btn-error" value="Download">
             </div>
     </form>

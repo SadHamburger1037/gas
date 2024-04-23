@@ -29,7 +29,4 @@ router.post("/download", function (req, res, next) {
   }
 });
 
-// link na datoteku radi isto skida, napisati ime datoteke lijevo i staviti link na datoteku koji je gumb i zove se download
-// ne dela :(
-
 module.exports = router;

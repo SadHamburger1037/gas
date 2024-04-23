@@ -58,6 +58,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const competitonsRouter = require('./routes/competitions');
 const filesRouter = require('./routes/files');
+const messagesRouter = require('./routes/messaging');
 
 // APP INIT
 const app = express();
@@ -87,6 +88,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/competitions', competitonsRouter);
 app.use('/files', filesRouter);
+app.use('/messages', messagesRouter);
 
 // 404 > ERROR HANDLER
 app.use(function (req, res, next) {

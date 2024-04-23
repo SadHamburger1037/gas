@@ -1,0 +1,56 @@
+<form method="post" action="/messages" class="max-w-md mx-auto mt-10">
+    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+    <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+            </svg>
+        </div>
+        <input type="text" name="name" id="name"
+            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Pretraži korisnike" required />
+        <button type="submit"
+            class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Pretraži</button>
+    </div>
+</form>
+
+{{#unless result.notFound}}
+<div class="flex justify-center mt-5">
+    <table class="table w-3/5">
+        <thead>
+            <tr>
+                <th>Ime</th>
+                <th>Role</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each result.korisnici}}
+            <tr class="hover" onclick="window.location='/messages/{{this.id}}'">
+                <td>{{this.name}}</td>
+                <td>{{this.role}}</td>
+                <td>{{this.id}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+{{/unless}}
+
+{{#if result.notFound}}
+<div class="mt-4 flex justify-center">
+    <div class="card w-96 bg-error text-primary-content">
+        <div class="card-body">
+            <h2 class="card-title">Greška!</h2>
+            <p>
+                Nismo mogli pronaći korisnika, provjerite jeste li točno napisali ime!
+            </p>
+            <div class="card-actions justify-end">
+                <a class="btn" href="/messages">Nastavi na poruke</a>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}

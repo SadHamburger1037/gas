@@ -25,7 +25,7 @@
                     <span x-text="new Date('{{this.applied_at}}').toLocaleString()"></span>
                 </td>
                 <td>
-                    <form method="post" action="/files/download" class="flex flex-col gap-2">
+                    <form method="post" action="/competitions/download" class="flex flex-col gap-2">
                         <div class="p-2 w-auto">
                             <input type="text" name="datoteka" value="datoteke/{{this.user_id}}/{{this.competition_id}}/{{get ../result.dokumenti this.user_id}}" readonly=""
                                 class="input input-bordered w-[500px]" />

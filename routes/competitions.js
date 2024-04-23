@@ -260,16 +260,25 @@ router.get("/sendresults/:id", function (req, res, next) {
 
 router.post("/sendresults/:id", function (req, res, next) {
 
-    if (!fs.existsSync("./datoteke/" + req.user.sub + "/" + req.params.id)) {
-        fs.mkdirSync("./datoteke/" + req.user.sub + "/" + req.params.id, {recursive: true});
+    if (!fs.existsSync("./datotekeNatjecanja/" + req.user.sub + "/" + req.params.id)) {
+        fs.mkdirSync("./datotekeNatjecanja/" + req.user.sub + "/" + req.params.id, { recursive: true });
     }
 
 
     if (req.files) {
-        fsExtra.emptyDirSync("./datoteke/" + req.user.sub + "/" + req.params.id)
-        req.files.file.mv("./datoteke/" + req.user.sub + "/" + req.params.id + "/" + req.files.file.name)
+        fsExtra.emptyDirSync("./datotekeNatjecanja/" + req.user.sub + "/" + req.params.id)
+        req.files.file.mv("./datotekeNatjecanja/" + req.user.sub + "/" + req.params.id + "/" + req.files.file.name)
     }
     res.redirect("/competitions/sendresults/" + req.params.id);
+});
+
+// POST /competitions/download
+router.post("/download", function (req, res, next) {
+    if (fs.existsSync(req.body.datoteka)) {
+        res.download(req.body.datoteka)
+    } else {
+        res.redirect("/competitions/signups/" + req.body.comp_id)
+    }
 });
 
 module.exports = router;
